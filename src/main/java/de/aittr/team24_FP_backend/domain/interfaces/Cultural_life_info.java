@@ -1,6 +1,8 @@
 package de.aittr.team24_FP_backend.domain.interfaces;
 
-public interface Shop {
+import java.util.Date;
+
+public interface Cultural_life_info {
     int getId();
     void setId(int id);
 
@@ -9,4 +11,7 @@ public interface Shop {
 
     String getDescription();
     void setDescription(String description);
+
+    Date getDate();
+    void setDate(Date date);
 }

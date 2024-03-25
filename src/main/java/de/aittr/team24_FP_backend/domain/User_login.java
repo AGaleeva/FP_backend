@@ -1,8 +1,10 @@
 package de.aittr.team24_FP_backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 
+@Builder
 @Entity
 @Table(name = "user_login")
 public class User_login implements de.aittr.team24_FP_backend.domain.interfaces.User_login {

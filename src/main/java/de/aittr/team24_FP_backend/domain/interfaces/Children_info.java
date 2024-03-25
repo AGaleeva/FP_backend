@@ -1,6 +1,7 @@
 package de.aittr.team24_FP_backend.domain.interfaces;
 
-public interface Service {
+public interface Children_info {
+
     int getId();
     void setId(int id);
 

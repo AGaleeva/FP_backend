@@ -2,12 +2,9 @@ package de.aittr.team24_FP_backend.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "cultural_life")
-public class Cultural_life implements de.aittr.team24_FP_backend.domain.interfaces.Cultural_life {
-
+@Table(name = "restaurants_info")
+public class Restaurants_info implements de.aittr.team24_FP_backend.domain.interfaces.Restaurants_info {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,17 +16,13 @@ public class Cultural_life implements de.aittr.team24_FP_backend.domain.interfac
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date")
-    private Date date;
-
-    public Cultural_life() {
+    public Restaurants_info() {
     }
 
-    public Cultural_life(int id, String title, String description, Date date) {
+    public Restaurants_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.date = date;
     }
 
     @Override
@@ -62,18 +55,9 @@ public class Cultural_life implements de.aittr.team24_FP_backend.domain.interfac
         this.description = description;
     }
 
-    @Override
-    public Date getDate() {
-        return date;
-    }
-
-    @Override
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
-        return "Cultural_life: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
+        return "Restaurant: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

@@ -1,6 +1,6 @@
 package de.aittr.team24_FP_backend.domain.interfaces;
 
-public interface Health {
+public interface Health_info {
     int getId();
     void setId(int id);
 

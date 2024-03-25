@@ -1,9 +1,6 @@
 package de.aittr.team24_FP_backend.domain.interfaces;
 
-import java.util.Date;
-
-public interface News {
-
+public interface Services_info {
     int getId();
     void setId(int id);
 
@@ -12,7 +9,4 @@ public interface News {
 
     String getDescription();
     void setDescription(String description);
-
-    Date getDate();
-    void setDate(Date date);
 }

@@ -1,10 +1,13 @@
 package de.aittr.team24_FP_backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Date;
 import java.util.Objects;
 
+
+@Builder
 @Entity
 @Table(name = "user")
 public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
@@ -29,47 +32,47 @@ public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
     @Column(name = "date_of_birth")
     private Date date_of_birth;
 
-    @Column(name = "news")
-    private Boolean news;
+    @Column(name = "general_news")
+    private Boolean general_news;
 
-    @Column(name = "cultural_life")
-    private Boolean cultural_life;
+    @Column(name = "cultural_life_info")
+    private Boolean cultural_life_info;
 
-    @Column(name = "children")
-    private Boolean children;
+    @Column(name = "children_info")
+    private Boolean children_info;
 
-    @Column(name = "health")
-    private Boolean health;
+    @Column(name = "health_info")
+    private Boolean health_info;
 
-    @Column(name = "shop")
-    private Boolean shop;
+    @Column(name = "shops_info")
+    private Boolean shops_info;
 
-    @Column(name = "cafe")
-    private Boolean cafe;
+    @Column(name = "restaurants_info")
+    private Boolean restaurants_info;
 
-    @Column(name = "service")
-    private Boolean service;
+    @Column(name = "services_info")
+    private Boolean services_info;
 
 
     public User() {
     }
 
     public User(int id, String email, String password, String firstName, String lastName
-            , Date date_of_birth, Boolean news, Boolean cultural_life, Boolean children,
-                Boolean health, Boolean shop, Boolean cafe, Boolean service) {
+            , Date date_of_birth, Boolean general_news, Boolean cultural_life_info, Boolean children_info,
+                Boolean health_info, Boolean shops_info, Boolean restaurants_info, Boolean services_info) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.date_of_birth = date_of_birth;
-        this.news = news;
-        this.cultural_life = cultural_life;
-        this.children = children;
-        this.health = health;
-        this.shop = shop;
-        this.cafe = cafe;
-        this.service = service;
+        this.general_news = general_news;
+        this.cultural_life_info = cultural_life_info;
+        this.children_info = children_info;
+        this.health_info = health_info;
+        this.shops_info = shops_info;
+        this.restaurants_info = restaurants_info;
+        this.services_info = services_info;
     }
 
     @Override
@@ -133,73 +136,73 @@ public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
     }
 
     @Override
-    public boolean getNews() {
-        return news;
+    public boolean getGeneral_news() {
+        return general_news;
     }
 
     @Override
-    public void setNews(Boolean news) {
-        this.news = news;
+    public void setGeneral_news(Boolean general_news) {
+        this.general_news = general_news;
     }
 
     @Override
-    public boolean getCultural_life() {
-        return cultural_life;
+    public boolean getCultural_life_info() {
+        return cultural_life_info;
     }
 
     @Override
-    public void setCultural_life(Boolean cultural_life) {
-        this.cultural_life = cultural_life;
+    public void setCultural_life_info(Boolean cultural_life_info) {
+        this.cultural_life_info = cultural_life_info;
     }
 
     @Override
-    public boolean getChildren() {
-        return children;
+    public boolean getChildren_info() {
+        return children_info;
     }
 
     @Override
-    public void setChildren(Boolean children) {
-        this.children = children;
+    public void setChildren_info(Boolean children_info) {
+        this.children_info = children_info;
     }
 
     @Override
-    public boolean getHealth() {
-        return health;
+    public boolean getHealth_info() {
+        return health_info;
     }
 
     @Override
-    public void setHealth(Boolean health) {
-        this.health = health;
+    public void setHealth_info(Boolean health_info) {
+        this.health_info = health_info;
     }
 
     @Override
-    public boolean getShop() {
-        return shop;
+    public boolean getShops_info() {
+        return shops_info;
     }
 
     @Override
-    public void setShop(Boolean shop) {
-        this.shop = shop;
+    public void setShops_info(Boolean shops_info) {
+        this.shops_info = shops_info;
     }
 
     @Override
-    public boolean getCafe() {
-        return cafe;
+    public boolean getRestaurants_info() {
+        return restaurants_info;
     }
 
     @Override
-    public void setCafe(Boolean cafe) {
-        this.cafe = cafe;
+    public void setRestaurants_info(Boolean restaurants_info) {
+        this.restaurants_info = restaurants_info;
     }
 
     @Override
-    public boolean getService() {
-        return service;
+    public boolean getServices_info() {
+        return services_info;
     }
 
     @Override
-    public void setService(Boolean service) {
-        this.service = service;
+    public void setServices_info(Boolean services_info) {
+        this.services_info = services_info;
     }
 
     @Override
@@ -219,7 +222,7 @@ public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
     public String toString() {
         return ("User: id=%d, email=%s, password=%s, firstName=%s, lastName=%s, date_of_birth=%s,news=%b, cultural_life=%b" +
                 ", children=%b, health=%b, shop=%b, cafe=%b, service=%b").formatted(id, email, password, firstName
-                , lastName, date_of_birth, news, cultural_life, children, health, shop, cafe, service);
+                , lastName, date_of_birth, general_news, cultural_life_info, children_info, health_info, shops_info
+                , restaurants_info, services_info);
     }
-
 }

@@ -4,6 +4,6 @@ public interface Role {
     int getId();
     void setId(int id);
 
-    String getRolename();
-    void setRolename(String rolename);
+    String getName();
+    void setName(String name);
 }

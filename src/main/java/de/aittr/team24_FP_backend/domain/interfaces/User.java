@@ -7,39 +7,39 @@ public interface User {
     int getId();
     void setId(int id);
 
-    String getFirstName();
-    void setFirstName(String firstName);
-
-    String getLastName();
-    void setLastName(String lastName);
-
     String getEmail();
     void setEmail(String email);
 
     String getPassword();
     void setPassword(String password);
 
+    String getFirstName();
+    void setFirstName(String firstName);
+
+    String getLastName();
+    void setLastName(String lastName);
+
     Date getDate_of_birth();
     void setDate_of_birth(Date date_of_birth);
 
-    boolean getNews();
-    void setNews(Boolean news);
+    boolean getGeneral_news();
+    void setGeneral_news(Boolean general_news);
 
-    boolean getCultural_life();
-    void setCultural_life(Boolean cultural_life);
+    boolean getCultural_life_info();
+    void setCultural_life_info(Boolean cultural_life_info);
 
-    boolean getChildren();
-    void setChildren(Boolean children);
+    boolean getChildren_info();
+    void setChildren_info(Boolean children_info);
 
-    boolean getHealth();
-    void  setHealth(Boolean health);
+    boolean getHealth_info();
+    void  setHealth_info(Boolean health_info);
 
-    boolean getShop();
-    void setShop(Boolean shop);
+    boolean getShops_info();
+    void setShops_info(Boolean shops_info);
 
-    boolean getCafe();
-    void setCafe(Boolean cafe);
+    boolean getRestaurants_info();
+    void setRestaurants_info(Boolean restaurants_info);
 
-    boolean getService();
-    void setService(Boolean service);
+    boolean getServices_info();
+    void setServices_info(Boolean services_info);
 }

@@ -12,15 +12,15 @@ public class Role implements de.aittr.team24_FP_backend.domain.interfaces.Role {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "rolename")
-    private String rolename;
+    @Column(name = "name")
+    private String name;
 
     public Role() {
     }
 
-    public Role(int id, String rolename) {
+    public Role(int id, String name) {
         this.id = id;
-        this.rolename = rolename;
+        this.name = name;
     }
 
     @Override
@@ -34,12 +34,12 @@ this.id = id;
     }
 
     @Override
-    public String getRolename() {
-        return rolename;
+    public String getName() {
+        return name;
     }
 
     @Override
-    public void setRolename(String rolename) {
-this.rolename = rolename;
+    public void setName(String name) {
+this.name = name;
     }
 }

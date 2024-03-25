@@ -3,8 +3,8 @@ package de.aittr.team24_FP_backend.domain;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "service")
-public class Service implements de.aittr.team24_FP_backend.domain.interfaces.Service {
+@Table(name = "children_info")
+public class Children_info implements de.aittr.team24_FP_backend.domain.interfaces.Children_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class Service implements de.aittr.team24_FP_backend.domain.interfaces.Ser
     @Column(name = "description")
     private String description;
 
-    public Service() {
+    public Children_info() {
     }
 
-    public Service(int id, String title, String description) {
+    public Children_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -59,6 +59,6 @@ public class Service implements de.aittr.team24_FP_backend.domain.interfaces.Ser
 
     @Override
     public String toString() {
-        return "Service: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Children: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }
