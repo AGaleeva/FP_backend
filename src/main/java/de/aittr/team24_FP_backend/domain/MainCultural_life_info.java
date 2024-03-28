@@ -1,10 +1,13 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Cultural_life_info;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "health_info")
-public class Health_info implements de.aittr.team24_FP_backend.domain.interfaces.Health_info {
+@Table(name = "cultural_life_info")
+public class MainCultural_life_info implements Cultural_life_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +20,17 @@ public class Health_info implements de.aittr.team24_FP_backend.domain.interfaces
     @Column(name = "description")
     private String description;
 
-    public Health_info() {
+    @Column(name = "date")
+    private Date date;
+
+    public MainCultural_life_info() {
     }
 
-    public Health_info(int id, String title, String description) {
+    public MainCultural_life_info(int id, String title, String description, Date date) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.date = date;
     }
 
     @Override
@@ -56,9 +63,18 @@ public class Health_info implements de.aittr.team24_FP_backend.domain.interfaces
         this.description = description;
     }
 
+    @Override
+    public Date getDate() {
+        return date;
+    }
+
+    @Override
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
-        return "Health: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Cultural_life: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
     }
 }

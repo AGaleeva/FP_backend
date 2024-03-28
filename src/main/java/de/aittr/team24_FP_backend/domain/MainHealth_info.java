@@ -1,10 +1,12 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Health_info;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "restaurants_info")
-public class Restaurants_info implements de.aittr.team24_FP_backend.domain.interfaces.Restaurants_info {
+@Table(name = "health_info")
+public class MainHealth_info implements Health_info {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,10 +18,10 @@ public class Restaurants_info implements de.aittr.team24_FP_backend.domain.inter
     @Column(name = "description")
     private String description;
 
-    public Restaurants_info() {
+    public MainHealth_info() {
     }
 
-    public Restaurants_info(int id, String title, String description) {
+    public MainHealth_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -58,6 +60,6 @@ public class Restaurants_info implements de.aittr.team24_FP_backend.domain.inter
 
     @Override
     public String toString() {
-        return "Restaurant: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Health: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

@@ -1,10 +1,13 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.General_news;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "children_info")
-public class Children_info implements de.aittr.team24_FP_backend.domain.interfaces.Children_info {
+@Table(name = "general_news")
+public class MainGeneral_news implements General_news {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +20,17 @@ public class Children_info implements de.aittr.team24_FP_backend.domain.interfac
     @Column(name = "description")
     private String description;
 
-    public Children_info() {
+    @Column(name = "date")
+    private Date date;
+
+    public MainGeneral_news() {
     }
 
-    public Children_info(int id, String title, String description) {
+    public MainGeneral_news(int id, String title, String description, Date date) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.date = date;
     }
 
     @Override
@@ -56,9 +63,18 @@ public class Children_info implements de.aittr.team24_FP_backend.domain.interfac
         this.description = description;
     }
 
+    @Override
+    public Date getDate() {
+        return date;
+    }
+
+    @Override
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
-        return "Children: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "News: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
     }
 }

@@ -1,16 +1,16 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 
 import java.util.Date;
-import java.util.Objects;
 
 
 @Builder
 @Entity
 @Table(name = "user")
-public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
+public class MainUser implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,12 +54,12 @@ public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
     private Boolean services_info;
 
 
-    public User() {
+    public MainUser() {
     }
 
-    public User(int id, String email, String password, String firstName, String lastName
+    public MainUser(int id, String email, String password, String firstName, String lastName
             , Date date_of_birth, Boolean general_news, Boolean cultural_life_info, Boolean children_info,
-                Boolean health_info, Boolean shops_info, Boolean restaurants_info, Boolean services_info) {
+                    Boolean health_info, Boolean shops_info, Boolean restaurants_info, Boolean services_info) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -205,18 +205,6 @@ public class User implements de.aittr.team24_FP_backend.domain.interfaces.User {
         this.services_info = services_info;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {

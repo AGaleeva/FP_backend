@@ -2,11 +2,9 @@ package de.aittr.team24_FP_backend.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "general_news")
-public class General_news implements de.aittr.team24_FP_backend.domain.interfaces.General_news {
+@Table(name = "children_info")
+public class MainChildren_info implements de.aittr.team24_FP_backend.domain.interfaces.Children_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +17,13 @@ public class General_news implements de.aittr.team24_FP_backend.domain.interface
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date")
-    private Date date;
-
-    public General_news() {
+    public MainChildren_info() {
     }
 
-    public General_news(int id, String title, String description, Date date) {
+    public MainChildren_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.date = date;
     }
 
     @Override
@@ -62,18 +56,9 @@ public class General_news implements de.aittr.team24_FP_backend.domain.interface
         this.description = description;
     }
 
-    @Override
-    public Date getDate() {
-        return date;
-    }
-
-    @Override
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
-        return "News: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
+        return "Children: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

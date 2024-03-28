@@ -1,10 +1,11 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Role;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "role")
-public class Role implements de.aittr.team24_FP_backend.domain.interfaces.Role {
+public class MainRole implements Role {
 
 
     @Id
@@ -15,10 +16,10 @@ public class Role implements de.aittr.team24_FP_backend.domain.interfaces.Role {
     @Column(name = "name")
     private String name;
 
-    public Role() {
+    public MainRole() {
     }
 
-    public Role(int id, String name) {
+    public MainRole(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -41,5 +42,9 @@ this.id = id;
     @Override
     public void setName(String name) {
 this.name = name;
+    }
+
+    public String toString() {
+        return "Role: id = %d, name = %s".formatted(id, name);
     }
 }

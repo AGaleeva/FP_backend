@@ -1,5 +1,6 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.User_login;
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -7,7 +8,7 @@ import lombok.Builder;
 @Builder
 @Entity
 @Table(name = "user_login")
-public class User_login implements de.aittr.team24_FP_backend.domain.interfaces.User_login {
+public class MainUser_login implements User_login {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +21,10 @@ public class User_login implements de.aittr.team24_FP_backend.domain.interfaces.
     @Column(name = "password")
     private String password;
 
-    public User_login() {
+    public MainUser_login() {
     }
 
-    public User_login(int id, String email, String password) {
+    public MainUser_login(int id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;

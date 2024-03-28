@@ -1,13 +1,11 @@
 package de.aittr.team24_FP_backend.domain;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Restaurants_info;
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "cultural_life_info")
-public class Cultural_life_info implements de.aittr.team24_FP_backend.domain.interfaces.Cultural_life_info {
-
+@Table(name = "restaurants_info")
+public class MainRestaurants_info implements Restaurants_info {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,17 +17,13 @@ public class Cultural_life_info implements de.aittr.team24_FP_backend.domain.int
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date")
-    private Date date;
-
-    public Cultural_life_info() {
+    public MainRestaurants_info() {
     }
 
-    public Cultural_life_info(int id, String title, String description, Date date) {
+    public MainRestaurants_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.date = date;
     }
 
     @Override
@@ -62,18 +56,9 @@ public class Cultural_life_info implements de.aittr.team24_FP_backend.domain.int
         this.description = description;
     }
 
-    @Override
-    public Date getDate() {
-        return date;
-    }
-
-    @Override
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
-        return "Cultural_life: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
+        return "Restaurant: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }
