@@ -13,6 +13,4 @@ public interface General_news {
     String getDescription();
     void setDescription(String description);
 
-    Date getDate();
-    void setDate(Date date);
 }

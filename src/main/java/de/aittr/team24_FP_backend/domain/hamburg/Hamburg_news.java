@@ -1,13 +1,13 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.hamburg;
 
 import de.aittr.team24_FP_backend.domain.interfaces.General_news;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
-@Table(name = "general_news")
-public class MainGeneral_news implements General_news {
+@Table(name = "hamburg_news")
+public class Hamburg_news implements General_news {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +20,10 @@ public class MainGeneral_news implements General_news {
     @Column(name = "description")
     private String description;
 
-
-    public MainGeneral_news() {
+    public Hamburg_news() {
     }
 
-    public MainGeneral_news(int id, String title, String description) {
+    public Hamburg_news(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -60,9 +59,21 @@ public class MainGeneral_news implements General_news {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hamburg_news that = (Hamburg_news) o;
+        return id == that.id && Objects.equals(title, that.title) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description);
+    }
 
     @Override
     public String toString() {
-        return "News: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Hamburg news: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }
