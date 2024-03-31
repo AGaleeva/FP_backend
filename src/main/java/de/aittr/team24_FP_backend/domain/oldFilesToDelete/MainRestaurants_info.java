@@ -1,4 +1,4 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
 import de.aittr.team24_FP_backend.domain.interfaces.Restaurants_info;
 import jakarta.persistence.*;

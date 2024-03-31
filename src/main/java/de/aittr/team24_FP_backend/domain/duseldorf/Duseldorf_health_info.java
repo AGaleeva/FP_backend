@@ -1,13 +1,13 @@
 package de.aittr.team24_FP_backend.domain.duseldorf;
 
-import de.aittr.team24_FP_backend.domain.interfaces.General_news;
+import de.aittr.team24_FP_backend.domain.interfaces.Health_info;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "duseldorf_health_info")
-public class Duseldorf_health_info implements General_news {
+public class Duseldorf_health_info implements Health_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

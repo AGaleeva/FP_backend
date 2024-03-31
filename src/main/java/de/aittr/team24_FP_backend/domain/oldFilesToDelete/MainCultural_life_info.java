@@ -1,10 +1,13 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Cultural_life_info;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "children_info")
-public class MainChildren_info implements de.aittr.team24_FP_backend.domain.interfaces.Children_info {
+@Table(name = "cultural_life_info")
+public class MainCultural_life_info implements Cultural_life_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +20,11 @@ public class MainChildren_info implements de.aittr.team24_FP_backend.domain.inte
     @Column(name = "description")
     private String description;
 
-    public MainChildren_info() {
+
+    public MainCultural_life_info() {
     }
 
-    public MainChildren_info(int id, String title, String description) {
+    public MainCultural_life_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -59,6 +63,6 @@ public class MainChildren_info implements de.aittr.team24_FP_backend.domain.inte
 
     @Override
     public String toString() {
-        return "Children: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Cultural_life: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

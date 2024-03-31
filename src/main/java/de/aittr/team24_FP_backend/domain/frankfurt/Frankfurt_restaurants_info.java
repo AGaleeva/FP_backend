@@ -1,13 +1,13 @@
 package de.aittr.team24_FP_backend.domain.frankfurt;
 
-import de.aittr.team24_FP_backend.domain.interfaces.General_news;
+import de.aittr.team24_FP_backend.domain.interfaces.Restaurants_info;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "frankfurt_restaurants_info")
-public class Frankfurt_restaurants_info implements General_news {
+public class Frankfurt_restaurants_info implements Restaurants_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

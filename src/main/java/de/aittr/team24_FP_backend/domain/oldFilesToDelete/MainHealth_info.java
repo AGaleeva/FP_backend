@@ -1,13 +1,11 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
-import de.aittr.team24_FP_backend.domain.interfaces.General_news;
+import de.aittr.team24_FP_backend.domain.interfaces.Health_info;
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "general_news")
-public class MainGeneral_news implements General_news {
+@Table(name = "health_info")
+public class MainHealth_info implements Health_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +18,10 @@ public class MainGeneral_news implements General_news {
     @Column(name = "description")
     private String description;
 
-
-    public MainGeneral_news() {
+    public MainHealth_info() {
     }
 
-    public MainGeneral_news(int id, String title, String description) {
+    public MainHealth_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -63,6 +60,6 @@ public class MainGeneral_news implements General_news {
 
     @Override
     public String toString() {
-        return "News: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Health: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

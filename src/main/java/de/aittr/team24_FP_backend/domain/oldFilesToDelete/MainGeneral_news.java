@@ -1,13 +1,11 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
-import de.aittr.team24_FP_backend.domain.interfaces.Cultural_life_info;
+import de.aittr.team24_FP_backend.domain.interfaces.General_news;
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "cultural_life_info")
-public class MainCultural_life_info implements Cultural_life_info {
+@Table(name = "general_news")
+public class MainGeneral_news implements General_news {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +18,14 @@ public class MainCultural_life_info implements Cultural_life_info {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date")
-    private Date date;
 
-    public MainCultural_life_info() {
+    public MainGeneral_news() {
     }
 
-    public MainCultural_life_info(int id, String title, String description, Date date) {
+    public MainGeneral_news(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.date = date;
     }
 
     @Override
@@ -63,18 +58,9 @@ public class MainCultural_life_info implements Cultural_life_info {
         this.description = description;
     }
 
-    @Override
-    public Date getDate() {
-        return date;
-    }
-
-    @Override
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
-        return "Cultural_life: id = %d, title = %s, description = %s, date = %s".formatted(id, title, description, date);
+        return "News: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

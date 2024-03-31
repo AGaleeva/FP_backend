@@ -1,11 +1,10 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
-import de.aittr.team24_FP_backend.domain.interfaces.Health_info;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "health_info")
-public class MainHealth_info implements Health_info {
+@Table(name = "children_info")
+public class MainChildren_info implements de.aittr.team24_FP_backend.domain.interfaces.Children_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +17,10 @@ public class MainHealth_info implements Health_info {
     @Column(name = "description")
     private String description;
 
-    public MainHealth_info() {
+    public MainChildren_info() {
     }
 
-    public MainHealth_info(int id, String title, String description) {
+    public MainChildren_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -60,6 +59,6 @@ public class MainHealth_info implements Health_info {
 
     @Override
     public String toString() {
-        return "Health: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Children: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

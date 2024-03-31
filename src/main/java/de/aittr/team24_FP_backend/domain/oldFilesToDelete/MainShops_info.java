@@ -1,10 +1,11 @@
-package de.aittr.team24_FP_backend.domain;
+package de.aittr.team24_FP_backend.domain.oldFilesToDelete;
 
+import de.aittr.team24_FP_backend.domain.interfaces.Shops_info;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "services_info")
-public class MainServices_info implements de.aittr.team24_FP_backend.domain.interfaces.Services_info {
+@Table(name = "shops_info")
+public class MainShops_info implements Shops_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +18,10 @@ public class MainServices_info implements de.aittr.team24_FP_backend.domain.inte
     @Column(name = "description")
     private String description;
 
-    public MainServices_info() {
+    public MainShops_info() {
     }
 
-    public MainServices_info(int id, String title, String description) {
+    public MainShops_info(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -59,6 +60,6 @@ public class MainServices_info implements de.aittr.team24_FP_backend.domain.inte
 
     @Override
     public String toString() {
-        return "Service: id = %d, title = %s, description = %s".formatted(id, title, description);
+        return "Shop: id = %d, title = %s, description = %s".formatted(id, title, description);
     }
 }

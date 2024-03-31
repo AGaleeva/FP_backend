@@ -1,13 +1,13 @@
 package de.aittr.team24_FP_backend.domain.frankfurt;
 
-import de.aittr.team24_FP_backend.domain.interfaces.General_news;
+import de.aittr.team24_FP_backend.domain.interfaces.Children_info;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "frankfurt_children_info")
-public class Frankfurt_children_info implements General_news {
+public class Frankfurt_children_info implements Children_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
