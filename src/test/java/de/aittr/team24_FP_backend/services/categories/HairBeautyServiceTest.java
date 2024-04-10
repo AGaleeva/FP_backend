@@ -1,12 +1,9 @@
 package de.aittr.team24_FP_backend.services.categories;
 
-import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
 import de.aittr.team24_FP_backend.domain.categories.HairBeautyInfo;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.HairBeautyNotFoundException;
-import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.HairBeautyUpdateException;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
 import de.aittr.team24_FP_backend.repositories.categories.HairBeautyRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -180,7 +177,7 @@ class HairBeautyServiceTest {
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(HairBeautyNotFoundException.class, () -> hairBeautyService.update(hairBeautyInfo, "Derlin"));
+        assertThrows(HairBeautyUpdateException.class, () -> hairBeautyService.update(hairBeautyInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
 

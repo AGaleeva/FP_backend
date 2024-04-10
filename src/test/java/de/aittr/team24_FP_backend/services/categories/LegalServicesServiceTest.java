@@ -2,10 +2,14 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
+import de.aittr.team24_FP_backend.domain.categories.LegalServicesInfo;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.LegalServiceNotFoundException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.LegalServiceUpdateException;
 import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import de.aittr.team24_FP_backend.repositories.categories.LegalServicesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,162 +27,161 @@ import static org.mockito.Mockito.*;
 
 class LegalServicesServiceTest {
     @Mock
-    private ChildrenRepository childrenRepository;
+    private LegalServicesRepository legalServicesRepository;
 
     @Mock
     private CityRepository cityRepository;
 
     @InjectMocks
-    private ChildrenService childrenService;
+    private LegalServicesService legalServicesService;
 
-    private ChildrenInfo childrenInfo;
+    private LegalServicesInfo legalServicesInfo;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        childrenInfo = new ChildrenInfo();
+        legalServicesInfo = new LegalServicesInfo();
 
     }
 
     @Test
     void saveTest() {
-        childrenInfo.setId(1);
+        legalServicesInfo.setId(1);
         when(cityRepository.findByName(anyString())).thenReturn(new City());
-        when(childrenRepository.save(any())).thenReturn(childrenInfo);
+        when(legalServicesRepository.save(any())).thenReturn(legalServicesInfo);
 
-        ChildrenInfo savedChildrenInfo = childrenService.save(new ChildrenInfo(), "Berlin");
+        LegalServicesInfo savedLegalServicesInfo = legalServicesService.save(new LegalServicesInfo(), "Berlin");
 
-        assertEquals(1, savedChildrenInfo.getId());
+        assertEquals(1, savedLegalServicesInfo.getId());
     }
 
     @Test
     void findByExistingIdTest() {
-        childrenInfo.setId(1);
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(childrenInfo));
+        legalServicesInfo.setId(1);
+        when(legalServicesRepository.findById(1)).thenReturn(Optional.of(legalServicesInfo));
 
-        ChildrenInfo foundChildrenInfo = childrenService.findById(1);
+        LegalServicesInfo foundLegalServicesInfo = legalServicesService.findById(1);
 
-        assertEquals(1, foundChildrenInfo.getId());
+        assertEquals(1, foundLegalServicesInfo.getId());
     }
 
     @Test
     void findByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(legalServicesRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findById(1));
+        assertThrows(LegalServiceNotFoundException.class, () -> legalServicesService.findById(1));
     }
 
     @Test
     void findAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo());
-        childrenList.add(new ChildrenInfo());
-        when(childrenRepository.findByCityName(anyString())).thenReturn(childrenList);
+        List<LegalServicesInfo> legalServicesList = new ArrayList<>();
+        legalServicesList.add(new LegalServicesInfo());
+        legalServicesList.add(new LegalServicesInfo());
+        when(legalServicesRepository.findByCityName(anyString())).thenReturn(legalServicesList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findAll("Berlin");
+        List<LegalServicesInfo> foundLegalServicesList = legalServicesService.findAll("Berlin");
 
-        assertEquals(childrenList.size(), foundChildrenList.size());
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        assertEquals(legalServicesList.size(), foundLegalServicesList.size());
+        verify(legalServicesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findSortAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("c title"));
+        List<LegalServicesInfo> legalServicesList = new ArrayList<>();
+        legalServicesList.add(new LegalServicesInfo("a title"));
+        legalServicesList.add(new LegalServicesInfo("b title"));
+        legalServicesList.add(new LegalServicesInfo("c title"));
 
-        when(childrenRepository.findSortAll("Berlin")).thenReturn(childrenList);
+        when(legalServicesRepository.findSortAll("Berlin")).thenReturn(legalServicesList);
 
-        List<ChildrenInfo> sortedChildrenList = childrenService.findSortAll("Berlin");
+        List<LegalServicesInfo> sortedLegalServicesList = legalServicesService.findSortAll("Berlin");
 
-        assertEquals("a title", sortedChildrenList.get(0).getTitle());
-        assertEquals("b title", sortedChildrenList.get(1).getTitle());
-        assertEquals("c title", sortedChildrenList.get(2).getTitle());
+        assertEquals("a title", sortedLegalServicesList.get(0).getTitle());
+        assertEquals("b title", sortedLegalServicesList.get(1).getTitle());
+        assertEquals("c title", sortedLegalServicesList.get(2).getTitle());
 
-        verify(childrenRepository, times(1)).findSortAll("Berlin");
+        verify(legalServicesRepository, times(1)).findSortAll("Berlin");
     }
 
 
     @Test
     void deleteByExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(new ChildrenInfo()));
+        when(legalServicesRepository.findById(1)).thenReturn(Optional.of(new LegalServicesInfo()));
 
-        childrenService.deleteById(1);
+        legalServicesService.deleteById(1);
 
-        verify(childrenRepository, times(1)).deleteById(1);
+        verify(legalServicesRepository, times(1)).deleteById(1);
     }
 
     @Test
     void deleteByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(legalServicesRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.deleteById(1));
+        assertThrows(LegalServiceNotFoundException.class, () -> legalServicesService.deleteById(1));
     }
 
 
     @Test
     void findByValidTitleTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("a title"));
+        List<LegalServicesInfo> legalServicesList = new ArrayList<>();
+        legalServicesList.add(new LegalServicesInfo("a title"));
+        legalServicesList.add(new LegalServicesInfo("b title"));
+        legalServicesList.add(new LegalServicesInfo("a title"));
 
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(childrenList);
+        when(legalServicesRepository.findByCityName("Berlin")).thenReturn(legalServicesList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findByTitle("a title", "Berlin");
+        List<LegalServicesInfo> foundLegalServicesList = legalServicesService.findByTitle("a title", "Berlin");
 
-        assertEquals(2, foundChildrenList.size());
-        assertEquals("a title", foundChildrenList.get(0).getTitle());
-        assertEquals("a title", foundChildrenList.get(1).getTitle());
+        assertEquals(2, foundLegalServicesList.size());
+        assertEquals("a title", foundLegalServicesList.get(0).getTitle());
+        assertEquals("a title", foundLegalServicesList.get(1).getTitle());
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(legalServicesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findByNotValidTitleTest() {
         String title = "title";
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
+        when(legalServicesRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findByTitle(String.format(
-                "There is no children with name [%s] in the database", title), "Berlin"));
+        assertThrows(LegalServiceNotFoundException.class, () -> legalServicesService.findByTitle(String.format(
+                "There is no legal Services with name [%s] in the database", title), "Berlin"));
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(legalServicesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     public void setStatusTest() {
-        childrenInfo.setId(1);
-        childrenInfo.setStatus(0);
+        legalServicesInfo.setId(1);
+        legalServicesInfo.setStatus(0);
 
-        when(childrenRepository.findById(any(Integer.class))).thenReturn(Optional.of(childrenInfo));
+        when(legalServicesRepository.findById(any(Integer.class))).thenReturn(Optional.of(legalServicesInfo));
 
-        childrenService.setStatus(1, 1);
+        legalServicesService.setStatus(1, 1);
 
-        assertEquals(childrenInfo.getStatus(), Integer.valueOf(1));
-        verify(childrenRepository, times(1)).findById(1);
+        assertEquals(legalServicesInfo.getStatus(), Integer.valueOf(1));
+        verify(legalServicesRepository, times(1)).findById(1);
     }
 
     @Test
     void updateValidInfo() {
-        childrenInfo.setId(1);
+        legalServicesInfo.setId(1);
 
-        when(childrenRepository.save(childrenInfo)).thenReturn(childrenInfo);
+        when(legalServicesRepository.save(legalServicesInfo)).thenReturn(legalServicesInfo);
         when(cityRepository.findByName("Berlin")).thenReturn(new City());
 
-        childrenService.update(childrenInfo, "Berlin");
+        legalServicesService.update(legalServicesInfo, "Berlin");
 
-        verify(childrenRepository, times(1)).save(childrenInfo);
+        verify(legalServicesRepository, times(1)).save(legalServicesInfo);
     }
 
     @Test
     void updateInvalidInfo() {
-        ChildrenInfo childrenInfo = new ChildrenInfo();
-        childrenInfo.setId(1);
+        legalServicesInfo.setId(1);
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
+        assertThrows(LegalServiceUpdateException.class, () -> legalServicesService.update(legalServicesInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
 

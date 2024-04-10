@@ -2,6 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.DoctorsInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.DoctorUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.DoctorValidationException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.DoctorNotFoundException;
@@ -85,12 +86,22 @@ public class DoctorsService {
     }
 
     public void update(DoctorsInfo doctor, String cityName) {
+//        try {
+//            City city = cityRepository.findByName(cityName);
+//            doctor.setCity(city);
+//            doctorsRepository.save(doctor);
+//        } catch (Exception e) {
+//            throw new DoctorUpdateException("Error updating doctor: " + e.getMessage());
+//        }
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             doctor.setCity(city);
             doctorsRepository.save(doctor);
         } catch (Exception e) {
-            throw new DoctorUpdateException("Error updating doctor: " + e.getMessage());
+            throw new DoctorUpdateException("Error updating: " + e.getMessage());
         }
 
     }

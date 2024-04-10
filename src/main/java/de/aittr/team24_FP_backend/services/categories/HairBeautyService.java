@@ -2,6 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.HairBeautyInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.HairBeautyUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.HairBeautyValidationException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.HairBeautyNotFoundException;
@@ -85,14 +86,24 @@ public class HairBeautyService {
     }
 
     public void update(HairBeautyInfo hairBeauty, String cityName) {
+//        try {
+//            City city = cityRepository.findByName(cityName);
+//            hairBeauty.setCity(city);
+//            hairBeautyRepository.save(hairBeauty);
+//        } catch (Exception e) {
+//            throw new HairBeautyUpdateException("Error updating hairBeauty: " + e.getMessage());
+//        }
+
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             hairBeauty.setCity(city);
             hairBeautyRepository.save(hairBeauty);
         } catch (Exception e) {
-            throw new HairBeautyUpdateException("Error updating hairBeauty: " + e.getMessage());
+            throw new HairBeautyUpdateException("Error updating: " + e.getMessage());
         }
-
     }
 
 }

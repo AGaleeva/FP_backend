@@ -2,9 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.PharmaciesInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.PharmaciesNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.PharmaciesUpdateException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.PharmaciesValidationException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.*;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
 import de.aittr.team24_FP_backend.repositories.categories.PharmaciesRepository;
 import jakarta.transaction.Transactional;
@@ -85,12 +83,22 @@ public class PharmaciesService {
     }
 
     public void update(PharmaciesInfo pharmacies, String cityName) {
+//        try {
+//            City city = cityRepository.findByName(cityName);
+//            pharmacies.setCity(city);
+//            pharmaciesRepository.save(pharmacies);
+//        } catch (Exception e) {
+//            throw new PharmaciesUpdateException("Error updating pharmacies: " + e.getMessage());
+//        }
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             pharmacies.setCity(city);
             pharmaciesRepository.save(pharmacies);
         } catch (Exception e) {
-            throw new PharmaciesUpdateException("Error updating pharmacies: " + e.getMessage());
+            throw new PharmaciesUpdateException("Error updating: " + e.getMessage());
         }
 
     }

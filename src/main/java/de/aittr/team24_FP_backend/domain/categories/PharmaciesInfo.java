@@ -62,6 +62,10 @@ public class PharmaciesInfo {
         this.city = city;
     }
 
+    public PharmaciesInfo(String title) {
+        this.title = title;
+    }
+
     public City getCity() {
         return city;
     }

@@ -1,11 +1,12 @@
 package de.aittr.team24_FP_backend.services.categories;
 
-import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
+import de.aittr.team24_FP_backend.domain.categories.PharmaciesInfo;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
-import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.PharmaciesNotFoundException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.PharmaciesUpdateException;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import de.aittr.team24_FP_backend.repositories.categories.PharmaciesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,162 +24,162 @@ import static org.mockito.Mockito.*;
 
 class PharmaciesServiceTest {
     @Mock
-    private ChildrenRepository childrenRepository;
+    private PharmaciesRepository pharmaciesRepository;
 
     @Mock
     private CityRepository cityRepository;
 
     @InjectMocks
-    private ChildrenService childrenService;
+    private PharmaciesService pharmaciesService;
 
-    private ChildrenInfo childrenInfo;
+    private PharmaciesInfo pharmaciesInfo;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        childrenInfo = new ChildrenInfo();
+        pharmaciesInfo = new PharmaciesInfo();
 
     }
 
     @Test
     void saveTest() {
-        childrenInfo.setId(1);
+        pharmaciesInfo.setId(1);
         when(cityRepository.findByName(anyString())).thenReturn(new City());
-        when(childrenRepository.save(any())).thenReturn(childrenInfo);
+        when(pharmaciesRepository.save(any())).thenReturn(pharmaciesInfo);
 
-        ChildrenInfo savedChildrenInfo = childrenService.save(new ChildrenInfo(), "Berlin");
+        PharmaciesInfo savedPharmaciesInfo = pharmaciesService.save(new PharmaciesInfo(), "Berlin");
 
-        assertEquals(1, savedChildrenInfo.getId());
+        assertEquals(1, savedPharmaciesInfo.getId());
     }
 
     @Test
     void findByExistingIdTest() {
-        childrenInfo.setId(1);
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(childrenInfo));
+        pharmaciesInfo.setId(1);
+        when(pharmaciesRepository.findById(1)).thenReturn(Optional.of(pharmaciesInfo));
 
-        ChildrenInfo foundChildrenInfo = childrenService.findById(1);
+        PharmaciesInfo foundPharmaciesInfo = pharmaciesService.findById(1);
 
-        assertEquals(1, foundChildrenInfo.getId());
+        assertEquals(1, foundPharmaciesInfo.getId());
     }
 
     @Test
     void findByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(pharmaciesRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findById(1));
+        assertThrows(PharmaciesNotFoundException.class, () -> pharmaciesService.findById(1));
     }
 
     @Test
     void findAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo());
-        childrenList.add(new ChildrenInfo());
-        when(childrenRepository.findByCityName(anyString())).thenReturn(childrenList);
+        List<PharmaciesInfo> pharmaciesList = new ArrayList<>();
+        pharmaciesList.add(new PharmaciesInfo());
+        pharmaciesList.add(new PharmaciesInfo());
+        when(pharmaciesRepository.findByCityName(anyString())).thenReturn(pharmaciesList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findAll("Berlin");
+        List<PharmaciesInfo> foundPharmaciesList = pharmaciesService.findAll("Berlin");
 
-        assertEquals(childrenList.size(), foundChildrenList.size());
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        assertEquals(pharmaciesList.size(), foundPharmaciesList.size());
+        verify(pharmaciesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findSortAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("c title"));
+        List<PharmaciesInfo> pharmaciesList = new ArrayList<>();
+        pharmaciesList.add(new PharmaciesInfo("a title"));
+        pharmaciesList.add(new PharmaciesInfo("b title"));
+        pharmaciesList.add(new PharmaciesInfo("c title"));
 
-        when(childrenRepository.findSortAll("Berlin")).thenReturn(childrenList);
+        when(pharmaciesRepository.findSortAll("Berlin")).thenReturn(pharmaciesList);
 
-        List<ChildrenInfo> sortedChildrenList = childrenService.findSortAll("Berlin");
+        List<PharmaciesInfo> sortedPharmaciesList = pharmaciesService.findSortAll("Berlin");
 
-        assertEquals("a title", sortedChildrenList.get(0).getTitle());
-        assertEquals("b title", sortedChildrenList.get(1).getTitle());
-        assertEquals("c title", sortedChildrenList.get(2).getTitle());
+        assertEquals("a title", sortedPharmaciesList.get(0).getTitle());
+        assertEquals("b title", sortedPharmaciesList.get(1).getTitle());
+        assertEquals("c title", sortedPharmaciesList.get(2).getTitle());
 
-        verify(childrenRepository, times(1)).findSortAll("Berlin");
+        verify(pharmaciesRepository, times(1)).findSortAll("Berlin");
     }
 
 
     @Test
     void deleteByExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(new ChildrenInfo()));
+        when(pharmaciesRepository.findById(1)).thenReturn(Optional.of(new PharmaciesInfo()));
 
-        childrenService.deleteById(1);
+        pharmaciesService.deleteById(1);
 
-        verify(childrenRepository, times(1)).deleteById(1);
+        verify(pharmaciesRepository, times(1)).deleteById(1);
     }
 
     @Test
     void deleteByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(pharmaciesRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.deleteById(1));
+        assertThrows(PharmaciesNotFoundException.class, () -> pharmaciesService.deleteById(1));
     }
 
 
     @Test
     void findByValidTitleTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("a title"));
+        List<PharmaciesInfo> pharmaciesList = new ArrayList<>();
+        pharmaciesList.add(new PharmaciesInfo("a title"));
+        pharmaciesList.add(new PharmaciesInfo("b title"));
+        pharmaciesList.add(new PharmaciesInfo("a title"));
 
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(childrenList);
+        when(pharmaciesRepository.findByCityName("Berlin")).thenReturn(pharmaciesList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findByTitle("a title", "Berlin");
+        List<PharmaciesInfo> foundPharmaciesList = pharmaciesService.findByTitle("a title", "Berlin");
 
-        assertEquals(2, foundChildrenList.size());
-        assertEquals("a title", foundChildrenList.get(0).getTitle());
-        assertEquals("a title", foundChildrenList.get(1).getTitle());
+        assertEquals(2, foundPharmaciesList.size());
+        assertEquals("a title", foundPharmaciesList.get(0).getTitle());
+        assertEquals("a title", foundPharmaciesList.get(1).getTitle());
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(pharmaciesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findByNotValidTitleTest() {
         String title = "title";
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
+        when(pharmaciesRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findByTitle(String.format(
-                "There is no children with name [%s] in the database", title), "Berlin"));
+        assertThrows(PharmaciesNotFoundException.class, () -> pharmaciesService.findByTitle(String.format(
+                "There is no pharmacies with name [%s] in the database", title), "Berlin"));
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(pharmaciesRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     public void setStatusTest() {
-        childrenInfo.setId(1);
-        childrenInfo.setStatus(0);
+        pharmaciesInfo.setId(1);
+        pharmaciesInfo.setStatus(0);
 
-        when(childrenRepository.findById(any(Integer.class))).thenReturn(Optional.of(childrenInfo));
+        when(pharmaciesRepository.findById(any(Integer.class))).thenReturn(Optional.of(pharmaciesInfo));
 
-        childrenService.setStatus(1, 1);
+        pharmaciesService.setStatus(1, 1);
 
-        assertEquals(childrenInfo.getStatus(), Integer.valueOf(1));
-        verify(childrenRepository, times(1)).findById(1);
+        assertEquals(pharmaciesInfo.getStatus(), Integer.valueOf(1));
+        verify(pharmaciesRepository, times(1)).findById(1);
     }
 
     @Test
     void updateValidInfo() {
-        childrenInfo.setId(1);
+        pharmaciesInfo.setId(1);
 
-        when(childrenRepository.save(childrenInfo)).thenReturn(childrenInfo);
+        when(pharmaciesRepository.save(pharmaciesInfo)).thenReturn(pharmaciesInfo);
         when(cityRepository.findByName("Berlin")).thenReturn(new City());
 
-        childrenService.update(childrenInfo, "Berlin");
+        pharmaciesService.update(pharmaciesInfo, "Berlin");
 
-        verify(childrenRepository, times(1)).save(childrenInfo);
+        verify(pharmaciesRepository, times(1)).save(pharmaciesInfo);
     }
 
     @Test
     void updateInvalidInfo() {
-        ChildrenInfo childrenInfo = new ChildrenInfo();
-        childrenInfo.setId(1);
+        pharmaciesInfo.setId(1);
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
+        assertThrows(PharmaciesUpdateException.class, () -> pharmaciesService.update(pharmaciesInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
 

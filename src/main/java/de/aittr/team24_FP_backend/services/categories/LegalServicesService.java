@@ -2,9 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.LegalServicesInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.LegalServiceNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.LegalServiceUpdateException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.LegalServiceValidationException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.*;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
 import de.aittr.team24_FP_backend.repositories.categories.LegalServicesRepository;
 import jakarta.transaction.Transactional;
@@ -85,12 +83,22 @@ public class LegalServicesService {
     }
 
     public void update(LegalServicesInfo legalService, String cityName) {
+//        try {
+//            City city = cityRepository.findByName(cityName);
+//            legalService.setCity(city);
+//            legalServicesRepository.save(legalService);
+//        } catch (Exception e) {
+//            throw new LegalServiceUpdateException("Error updating legalService: " + e.getMessage());
+//        }
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             legalService.setCity(city);
             legalServicesRepository.save(legalService);
         } catch (Exception e) {
-            throw new LegalServiceUpdateException("Error updating legalService: " + e.getMessage());
+            throw new LegalServiceUpdateException("Error updating: " + e.getMessage());
         }
 
     }

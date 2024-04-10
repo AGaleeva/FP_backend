@@ -1,11 +1,10 @@
 package de.aittr.team24_FP_backend.services.categories;
 
-import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
-import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
+import de.aittr.team24_FP_backend.domain.categories.TranslatorsInfo;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.*;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import de.aittr.team24_FP_backend.repositories.categories.TranslatorsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,165 +22,162 @@ import static org.mockito.Mockito.*;
 
 class TranslatorsServiceTest {
     @Mock
-    private ChildrenRepository childrenRepository;
+    private TranslatorsRepository translatorsRepository;
 
     @Mock
     private CityRepository cityRepository;
 
     @InjectMocks
-    private ChildrenService childrenService;
+    private TranslatorsService translatorsService;
 
-    private ChildrenInfo childrenInfo;
+    private TranslatorsInfo translatorsInfo;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        childrenInfo = new ChildrenInfo();
+        translatorsInfo = new TranslatorsInfo();
 
     }
 
     @Test
     void saveTest() {
-        childrenInfo.setId(1);
+        translatorsInfo.setId(1);
         when(cityRepository.findByName(anyString())).thenReturn(new City());
-        when(childrenRepository.save(any())).thenReturn(childrenInfo);
+        when(translatorsRepository.save(any())).thenReturn(translatorsInfo);
 
-        ChildrenInfo savedChildrenInfo = childrenService.save(new ChildrenInfo(), "Berlin");
+        TranslatorsInfo savedTranslatorsInfo = translatorsService.save(new TranslatorsInfo(), "Berlin");
 
-        assertEquals(1, savedChildrenInfo.getId());
+        assertEquals(1, savedTranslatorsInfo.getId());
     }
 
     @Test
     void findByExistingIdTest() {
-        childrenInfo.setId(1);
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(childrenInfo));
+        translatorsInfo.setId(1);
+        when(translatorsRepository.findById(1)).thenReturn(Optional.of(translatorsInfo));
 
-        ChildrenInfo foundChildrenInfo = childrenService.findById(1);
+        TranslatorsInfo foundTranslatorsInfo = translatorsService.findById(1);
 
-        assertEquals(1, foundChildrenInfo.getId());
+        assertEquals(1, foundTranslatorsInfo.getId());
     }
 
     @Test
     void findByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(translatorsRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findById(1));
+        assertThrows(TranslatorNotFoundException.class, () -> translatorsService.findById(1));
     }
 
     @Test
     void findAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo());
-        childrenList.add(new ChildrenInfo());
-        when(childrenRepository.findByCityName(anyString())).thenReturn(childrenList);
+        List<TranslatorsInfo> translatorsList = new ArrayList<>();
+        translatorsList.add(new TranslatorsInfo());
+        translatorsList.add(new TranslatorsInfo());
+        when(translatorsRepository.findByCityName(anyString())).thenReturn(translatorsList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findAll("Berlin");
+        List<TranslatorsInfo> foundTranslatorsList = translatorsService.findAll("Berlin");
 
-        assertEquals(childrenList.size(), foundChildrenList.size());
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        assertEquals(translatorsList.size(), foundTranslatorsList.size());
+        verify(translatorsRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findSortAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("c title"));
+        List<TranslatorsInfo> translatorsList = new ArrayList<>();
+        translatorsList.add(new TranslatorsInfo("a title"));
+        translatorsList.add(new TranslatorsInfo("b title"));
+        translatorsList.add(new TranslatorsInfo("c title"));
 
-        when(childrenRepository.findSortAll("Berlin")).thenReturn(childrenList);
+        when(translatorsRepository.findSortAll("Berlin")).thenReturn(translatorsList);
 
-        List<ChildrenInfo> sortedChildrenList = childrenService.findSortAll("Berlin");
+        List<TranslatorsInfo> sortedTranslatorsList = translatorsService.findSortAll("Berlin");
 
-        assertEquals("a title", sortedChildrenList.get(0).getTitle());
-        assertEquals("b title", sortedChildrenList.get(1).getTitle());
-        assertEquals("c title", sortedChildrenList.get(2).getTitle());
+        assertEquals("a title", sortedTranslatorsList.get(0).getTitle());
+        assertEquals("b title", sortedTranslatorsList.get(1).getTitle());
+        assertEquals("c title", sortedTranslatorsList.get(2).getTitle());
 
-        verify(childrenRepository, times(1)).findSortAll("Berlin");
+        verify(translatorsRepository, times(1)).findSortAll("Berlin");
     }
 
 
     @Test
     void deleteByExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(new ChildrenInfo()));
+        when(translatorsRepository.findById(1)).thenReturn(Optional.of(new TranslatorsInfo()));
 
-        childrenService.deleteById(1);
+        translatorsService.deleteById(1);
 
-        verify(childrenRepository, times(1)).deleteById(1);
+        verify(translatorsRepository, times(1)).deleteById(1);
     }
 
     @Test
     void deleteByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(translatorsRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.deleteById(1));
+        assertThrows(TranslatorNotFoundException.class, () -> translatorsService.deleteById(1));
     }
 
 
     @Test
     void findByValidTitleTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("a title"));
+        List<TranslatorsInfo> translatorsList = new ArrayList<>();
+        translatorsList.add(new TranslatorsInfo("a title"));
+        translatorsList.add(new TranslatorsInfo("b title"));
+        translatorsList.add(new TranslatorsInfo("a title"));
 
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(childrenList);
+        when(translatorsRepository.findByCityName("Berlin")).thenReturn(translatorsList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findByTitle("a title", "Berlin");
+        List<TranslatorsInfo> foundTranslatorsList = translatorsService.findByTitle("a title", "Berlin");
 
-        assertEquals(2, foundChildrenList.size());
-        assertEquals("a title", foundChildrenList.get(0).getTitle());
-        assertEquals("a title", foundChildrenList.get(1).getTitle());
+        assertEquals(2, foundTranslatorsList.size());
+        assertEquals("a title", foundTranslatorsList.get(0).getTitle());
+        assertEquals("a title", foundTranslatorsList.get(1).getTitle());
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(translatorsRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findByNotValidTitleTest() {
         String title = "title";
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
+        when(translatorsRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findByTitle(String.format(
-                "There is no children with name [%s] in the database", title), "Berlin"));
+        assertThrows(TranslatorNotFoundException.class, () -> translatorsService.findByTitle(String.format(
+                "There is no Translator with name [%s] in the database", title), "Berlin"));
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(translatorsRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     public void setStatusTest() {
-        childrenInfo.setId(1);
-        childrenInfo.setStatus(0);
+        translatorsInfo.setId(1);
+        translatorsInfo.setStatus(0);
 
-        when(childrenRepository.findById(any(Integer.class))).thenReturn(Optional.of(childrenInfo));
+        when(translatorsRepository.findById(any(Integer.class))).thenReturn(Optional.of(translatorsInfo));
 
-        childrenService.setStatus(1, 1);
+        translatorsService.setStatus(1, 1);
 
-        assertEquals(childrenInfo.getStatus(), Integer.valueOf(1));
-        verify(childrenRepository, times(1)).findById(1);
+        assertEquals(translatorsInfo.getStatus(), Integer.valueOf(1));
+        verify(translatorsRepository, times(1)).findById(1);
     }
 
     @Test
     void updateValidInfo() {
-        childrenInfo.setId(1);
+        translatorsInfo.setId(1);
 
-        when(childrenRepository.save(childrenInfo)).thenReturn(childrenInfo);
+        when(translatorsRepository.save(translatorsInfo)).thenReturn(translatorsInfo);
         when(cityRepository.findByName("Berlin")).thenReturn(new City());
 
-        childrenService.update(childrenInfo, "Berlin");
+        translatorsService.update(translatorsInfo, "Berlin");
 
-        verify(childrenRepository, times(1)).save(childrenInfo);
+        verify(translatorsRepository, times(1)).save(translatorsInfo);
     }
 
     @Test
     void updateInvalidInfo() {
-        ChildrenInfo childrenInfo = new ChildrenInfo();
-        childrenInfo.setId(1);
+        translatorsInfo.setId(1);
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
+        assertThrows(TranslatorUpdateException.class, () -> translatorsService.update(translatorsInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
-
     }
-
 }

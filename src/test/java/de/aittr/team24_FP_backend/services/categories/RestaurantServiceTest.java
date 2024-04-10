@@ -1,11 +1,10 @@
 package de.aittr.team24_FP_backend.services.categories;
 
-import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
-import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
+import de.aittr.team24_FP_backend.domain.categories.RestaurantsInfo;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.*;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import de.aittr.team24_FP_backend.repositories.categories.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,165 +22,163 @@ import static org.mockito.Mockito.*;
 
 class RestaurantServiceTest {
     @Mock
-    private ChildrenRepository childrenRepository;
+    private RestaurantRepository restaurantRepository;
 
     @Mock
     private CityRepository cityRepository;
 
     @InjectMocks
-    private ChildrenService childrenService;
+    private RestaurantService restaurantService;
 
-    private ChildrenInfo childrenInfo;
+    private RestaurantsInfo restaurantsInfo;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        childrenInfo = new ChildrenInfo();
+        restaurantsInfo = new RestaurantsInfo();
 
     }
 
     @Test
     void saveTest() {
-        childrenInfo.setId(1);
+        restaurantsInfo.setId(1);
         when(cityRepository.findByName(anyString())).thenReturn(new City());
-        when(childrenRepository.save(any())).thenReturn(childrenInfo);
+        when(restaurantRepository.save(any())).thenReturn(restaurantsInfo);
 
-        ChildrenInfo savedChildrenInfo = childrenService.save(new ChildrenInfo(), "Berlin");
+        RestaurantsInfo savedRestaurantsInfo = restaurantService.save(new RestaurantsInfo(), "Berlin");
 
-        assertEquals(1, savedChildrenInfo.getId());
+        assertEquals(1, savedRestaurantsInfo.getId());
     }
 
     @Test
     void findByExistingIdTest() {
-        childrenInfo.setId(1);
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(childrenInfo));
+        restaurantsInfo.setId(1);
+        when(restaurantRepository.findById(1)).thenReturn(Optional.of(restaurantsInfo));
 
-        ChildrenInfo foundChildrenInfo = childrenService.findById(1);
+        RestaurantsInfo foundRestaurantsInfo = restaurantService.findById(1);
 
-        assertEquals(1, foundChildrenInfo.getId());
+        assertEquals(1, foundRestaurantsInfo.getId());
     }
 
     @Test
     void findByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(restaurantRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findById(1));
+        assertThrows(RestaurantsNotFoundException.class, () -> restaurantService.findById(1));
     }
 
     @Test
     void findAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo());
-        childrenList.add(new ChildrenInfo());
-        when(childrenRepository.findByCityName(anyString())).thenReturn(childrenList);
+        List<RestaurantsInfo> restaurantsList = new ArrayList<>();
+        restaurantsList.add(new RestaurantsInfo());
+        restaurantsList.add(new RestaurantsInfo());
+        when(restaurantRepository.findByCityName(anyString())).thenReturn(restaurantsList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findAll("Berlin");
+        List<RestaurantsInfo> foundRestaurantsList = restaurantService.findAll("Berlin");
 
-        assertEquals(childrenList.size(), foundChildrenList.size());
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        assertEquals(restaurantsList.size(), foundRestaurantsList.size());
+        verify(restaurantRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findSortAllTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("c title"));
+        List<RestaurantsInfo> restaurantsList = new ArrayList<>();
+        restaurantsList.add(new RestaurantsInfo("a title"));
+        restaurantsList.add(new RestaurantsInfo("b title"));
+        restaurantsList.add(new RestaurantsInfo("c title"));
 
-        when(childrenRepository.findSortAll("Berlin")).thenReturn(childrenList);
+        when(restaurantRepository.findSortAll("Berlin")).thenReturn(restaurantsList);
 
-        List<ChildrenInfo> sortedChildrenList = childrenService.findSortAll("Berlin");
+        List<RestaurantsInfo> sortedRestaurantsList = restaurantService.findSortAll("Berlin");
 
-        assertEquals("a title", sortedChildrenList.get(0).getTitle());
-        assertEquals("b title", sortedChildrenList.get(1).getTitle());
-        assertEquals("c title", sortedChildrenList.get(2).getTitle());
+        assertEquals("a title", sortedRestaurantsList.get(0).getTitle());
+        assertEquals("b title", sortedRestaurantsList.get(1).getTitle());
+        assertEquals("c title", sortedRestaurantsList.get(2).getTitle());
 
-        verify(childrenRepository, times(1)).findSortAll("Berlin");
+        verify(restaurantRepository, times(1)).findSortAll("Berlin");
     }
 
 
     @Test
     void deleteByExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.of(new ChildrenInfo()));
+        when(restaurantRepository.findById(1)).thenReturn(Optional.of(new RestaurantsInfo()));
 
-        childrenService.deleteById(1);
+        restaurantService.deleteById(1);
 
-        verify(childrenRepository, times(1)).deleteById(1);
+        verify(restaurantRepository, times(1)).deleteById(1);
     }
 
     @Test
     void deleteByNotExistingIdTest() {
-        when(childrenRepository.findById(1)).thenReturn(Optional.empty());
+        when(restaurantRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.deleteById(1));
+        assertThrows(RestaurantsNotFoundException.class, () -> restaurantService.deleteById(1));
     }
 
 
     @Test
     void findByValidTitleTest() {
-        List<ChildrenInfo> childrenList = new ArrayList<>();
-        childrenList.add(new ChildrenInfo("a title"));
-        childrenList.add(new ChildrenInfo("b title"));
-        childrenList.add(new ChildrenInfo("a title"));
+        List<RestaurantsInfo> restaurantsList = new ArrayList<>();
+        restaurantsList.add(new RestaurantsInfo("a title"));
+        restaurantsList.add(new RestaurantsInfo("b title"));
+        restaurantsList.add(new RestaurantsInfo("a title"));
 
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(childrenList);
+        when(restaurantRepository.findByCityName("Berlin")).thenReturn(restaurantsList);
 
-        List<ChildrenInfo> foundChildrenList = childrenService.findByTitle("a title", "Berlin");
+        List<RestaurantsInfo> foundRestaurantsList = restaurantService.findByTitle("a title", "Berlin");
 
-        assertEquals(2, foundChildrenList.size());
-        assertEquals("a title", foundChildrenList.get(0).getTitle());
-        assertEquals("a title", foundChildrenList.get(1).getTitle());
+        assertEquals(2, foundRestaurantsList.size());
+        assertEquals("a title", foundRestaurantsList.get(0).getTitle());
+        assertEquals("a title", foundRestaurantsList.get(1).getTitle());
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(restaurantRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     void findByNotValidTitleTest() {
         String title = "title";
-        when(childrenRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
+        when(restaurantRepository.findByCityName("Berlin")).thenReturn(new ArrayList<>());
 
-        assertThrows(ChildrenNotFoundException.class, () -> childrenService.findByTitle(String.format(
-                "There is no children with name [%s] in the database", title), "Berlin"));
+        assertThrows(RestaurantsNotFoundException.class, () -> restaurantService.findByTitle(String.format(
+                "There is no Restaurant with name [%s] in the database", title), "Berlin"));
 
-        verify(childrenRepository, times(1)).findByCityName("Berlin");
+        verify(restaurantRepository, times(1)).findByCityName("Berlin");
     }
 
     @Test
     public void setStatusTest() {
-        childrenInfo.setId(1);
-        childrenInfo.setStatus(0);
+        restaurantsInfo.setId(1);
+        restaurantsInfo.setStatus(0);
 
-        when(childrenRepository.findById(any(Integer.class))).thenReturn(Optional.of(childrenInfo));
+        when(restaurantRepository.findById(any(Integer.class))).thenReturn(Optional.of(restaurantsInfo));
 
-        childrenService.setStatus(1, 1);
+        restaurantService.setStatus(1, 1);
 
-        assertEquals(childrenInfo.getStatus(), Integer.valueOf(1));
-        verify(childrenRepository, times(1)).findById(1);
+        assertEquals(restaurantsInfo.getStatus(), Integer.valueOf(1));
+        verify(restaurantRepository, times(1)).findById(1);
     }
 
     @Test
     void updateValidInfo() {
-        childrenInfo.setId(1);
+        restaurantsInfo.setId(1);
 
-        when(childrenRepository.save(childrenInfo)).thenReturn(childrenInfo);
+        when(restaurantRepository.save(restaurantsInfo)).thenReturn(restaurantsInfo);
         when(cityRepository.findByName("Berlin")).thenReturn(new City());
 
-        childrenService.update(childrenInfo, "Berlin");
+        restaurantService.update(restaurantsInfo, "Berlin");
 
-        verify(childrenRepository, times(1)).save(childrenInfo);
+        verify(restaurantRepository, times(1)).save(restaurantsInfo);
     }
 
     @Test
     void updateInvalidInfo() {
-        ChildrenInfo childrenInfo = new ChildrenInfo();
-        childrenInfo.setId(1);
+        restaurantsInfo.setId(1);
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
+        assertThrows(RestaurantUpdateException.class, () -> restaurantService.update(restaurantsInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
-
     }
-
 }

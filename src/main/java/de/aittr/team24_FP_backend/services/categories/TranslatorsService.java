@@ -2,9 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.TranslatorsInfo;
 import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.TranslatorNotFoundException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.TranslatorUpdateException;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.TranslatorValidationException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.*;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
 import de.aittr.team24_FP_backend.repositories.categories.TranslatorsRepository;
 import jakarta.transaction.Transactional;
@@ -85,12 +83,22 @@ public class TranslatorsService {
     }
 
     public void update(TranslatorsInfo translator, String cityName) {
+//        try {
+//            City city = cityRepository.findByName(cityName);
+//            translator.setCity(city);
+//            translatorsRepository.save(translator);
+//        } catch (Exception e) {
+//            throw new TranslatorUpdateException("Error updating translator: " + e.getMessage());
+//        }
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             translator.setCity(city);
             translatorsRepository.save(translator);
         } catch (Exception e) {
-            throw new TranslatorUpdateException("Error updating translator: " + e.getMessage());
+            throw new TranslatorUpdateException("Error updating: " + e.getMessage());
         }
 
     }
