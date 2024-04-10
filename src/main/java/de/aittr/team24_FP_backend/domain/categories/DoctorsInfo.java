@@ -60,6 +60,10 @@ public class DoctorsInfo {
         this.city = city;
     }
 
+    public DoctorsInfo(String title) {
+        this.title = title;
+    }
+
     public City getCity() {
         return city;
     }

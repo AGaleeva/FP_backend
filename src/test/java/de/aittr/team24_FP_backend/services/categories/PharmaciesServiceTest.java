@@ -1,16 +1,13 @@
 package de.aittr.team24_FP_backend.services.categories;
 
-import de.aittr.team24_FP_backend.domain.categories.City;
-import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
+import de.aittr.team24_FP_backend.domain.categories.City;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
 import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,10 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class ChildrenServiceTest {
-
+class PharmaciesServiceTest {
     @Mock
     private ChildrenRepository childrenRepository;
 
@@ -184,4 +183,5 @@ class ChildrenServiceTest {
         verify(cityRepository, times(1)).findByName("Derlin");
 
     }
+
 }
