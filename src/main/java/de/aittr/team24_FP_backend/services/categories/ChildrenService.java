@@ -94,10 +94,13 @@ public class ChildrenService {
     public void update(ChildrenInfo children, String cityName) {
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ChildrenUpdateException("Invalid city name: " + cityName);
+            }
             children.setCity(city);
             childrenRepository.save(children);
         } catch (Exception e) {
-            throw new ChildrenUpdateException("Error updating children: " + e.getMessage());
+            throw new ChildrenUpdateException("Error updating: " + e.getMessage());
         }
 
     }

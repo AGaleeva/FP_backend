@@ -171,14 +171,14 @@ class RestaurantServiceTest {
         verify(restaurantRepository, times(1)).save(restaurantsInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        restaurantsInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(RestaurantUpdateException.class, () -> restaurantService.update(restaurantsInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//    }
+    @Test
+    void updateInvalidInfo() {
+        restaurantsInfo.setId(1);
+
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(RestaurantUpdateException.class, () -> restaurantService.update(restaurantsInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+    }
 }

@@ -170,14 +170,14 @@ class ShopServiceTest {
         verify(shopRepository, times(1)).save(shopsInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        shopsInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(ShopUpdateException.class, () -> shopService.update(shopsInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//    }
+    @Test
+    void updateInvalidInfo() {
+        shopsInfo.setId(1);
+
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(ShopUpdateException.class, () -> shopService.update(shopsInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+    }
 }

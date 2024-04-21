@@ -171,16 +171,15 @@ class HairBeautyServiceTest {
         verify(hairBeautyRepository, times(1)).save(hairBeautyInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        hairBeautyInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(HairBeautyUpdateException.class, () -> hairBeautyService.update(hairBeautyInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//
-//    }
+    @Test
+    void updateInvalidInfo() {
+        hairBeautyInfo.setId(1);
 
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(HairBeautyUpdateException.class, () -> hairBeautyService.update(hairBeautyInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+
+    }
 }

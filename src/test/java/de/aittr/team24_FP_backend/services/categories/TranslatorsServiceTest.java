@@ -170,14 +170,14 @@ class TranslatorsServiceTest {
         verify(translatorsRepository, times(1)).save(translatorsInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        translatorsInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(TranslatorUpdateException.class, () -> translatorsService.update(translatorsInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//    }
+    @Test
+    void updateInvalidInfo() {
+        translatorsInfo.setId(1);
+
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(TranslatorUpdateException.class, () -> translatorsService.update(translatorsInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+    }
 }

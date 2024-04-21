@@ -171,16 +171,15 @@ class LegalServicesServiceTest {
         verify(legalServicesRepository, times(1)).save(legalServicesInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        legalServicesInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(LegalServiceUpdateException.class, () -> legalServicesService.update(legalServicesInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//
-//    }
+    @Test
+    void updateInvalidInfo() {
+        legalServicesInfo.setId(1);
 
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(LegalServiceUpdateException.class, () -> legalServicesService.update(legalServicesInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+
+    }
 }

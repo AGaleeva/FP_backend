@@ -11,9 +11,11 @@ import de.aittr.team24_FP_backend.domain.categories.ChildrenInfo;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenNotFoundException;
 import de.aittr.team24_FP_backend.repositories.categories.ChildrenRepository;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
+import de.aittr.team24_FP_backend.services.email.DatabaseChangeListenerService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,11 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class ChildrenServiceTest {
+
+    @InjectMocks
+    private ChildrenService childrenService;
 
     @Mock
     private ChildrenRepository childrenRepository;
@@ -29,10 +35,11 @@ class ChildrenServiceTest {
     @Mock
     private CityRepository cityRepository;
 
-    @InjectMocks
-    private ChildrenService childrenService;
+    @Mock
+    private DatabaseChangeListenerService databaseChangeListenerService;
 
     private ChildrenInfo childrenInfo;
+
 
     @BeforeEach
     void setUp() {
@@ -41,16 +48,25 @@ class ChildrenServiceTest {
 
     }
 
-//    @Test
-//    void saveTest() {
-//        childrenInfo.setId(1);
-//        when(cityRepository.findByName(anyString())).thenReturn(new City());
-//        when(childrenRepository.save(any())).thenReturn(childrenInfo);
-//
-//        ChildrenInfo savedChildrenInfo = childrenService.save(new ChildrenInfo(), "Berlin");
-//
-//        assertEquals(1, savedChildrenInfo.getId());
-//    }
+    @Test
+    void saveTest() {
+        childrenInfo.setId(1);
+        childrenInfo.setTitle("Test");
+
+        City city = new City();
+        city.setName("Berlin");
+
+        when(cityRepository.findByName(any(String.class))).thenReturn(city);
+        when(childrenRepository.save(any(ChildrenInfo.class))).thenReturn(childrenInfo);
+
+        ChildrenInfo savedChildrenInfo = childrenService.save(childrenInfo, "Berlin");
+
+        assertEquals(savedChildrenInfo.getId(), childrenInfo.getId());
+        assertEquals(savedChildrenInfo.getTitle(), childrenInfo.getTitle());
+        assertEquals(savedChildrenInfo.getCity().getName(), city.getName());
+
+        verify(databaseChangeListenerService, times(1)).handleDatabaseChangeChildrenInfo(any(String.class), any(ChildrenInfo.class));
+    }
 
     @Test
     void findByExistingIdTest() {
@@ -172,16 +188,16 @@ class ChildrenServiceTest {
         verify(childrenRepository, times(1)).save(childrenInfo);
     }
 
-//    @Test
-//    void updateInvalidInfo() {
-//        ChildrenInfo childrenInfo = new ChildrenInfo();
-//        childrenInfo.setId(1);
-//
-//        when(cityRepository.findByName("Derlin")).thenReturn(null);
-//
-//        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
-//
-//        verify(cityRepository, times(1)).findByName("Derlin");
-//
-//    }
+    @Test
+    void updateInvalidInfo() {
+        ChildrenInfo childrenInfo = new ChildrenInfo();
+        childrenInfo.setId(1);
+
+        when(cityRepository.findByName("Derlin")).thenReturn(null);
+
+        assertThrows(ChildrenUpdateException.class, () -> childrenService.update(childrenInfo, "Derlin"));
+
+        verify(cityRepository, times(1)).findByName("Derlin");
+
+    }
 }

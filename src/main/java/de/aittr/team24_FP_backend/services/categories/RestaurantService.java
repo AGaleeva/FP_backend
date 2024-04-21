@@ -2,6 +2,7 @@ package de.aittr.team24_FP_backend.services.categories;
 
 import de.aittr.team24_FP_backend.domain.categories.City;
 import de.aittr.team24_FP_backend.domain.categories.RestaurantsInfo;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.ChildrenUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.RestaurantUpdateException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.RestaurantValidationException;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.RestaurantsNotFoundException;
@@ -95,10 +96,13 @@ public class RestaurantService {
     public void update(RestaurantsInfo restaurant, String cityName) {
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new RestaurantUpdateException("Invalid city name: " + cityName);
+            }
             restaurant.setCity(city);
             restaurantRepository.save(restaurant);
         } catch (Exception e) {
-            throw new RestaurantUpdateException("Error updating restaurant: " + e.getMessage());
+            throw new RestaurantUpdateException("Error updating: " + e.getMessage());
         }
 
     }

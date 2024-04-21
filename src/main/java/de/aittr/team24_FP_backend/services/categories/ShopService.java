@@ -93,10 +93,13 @@ public class ShopService {
     public void update(ShopsInfo shop, String cityName) {
         try {
             City city = cityRepository.findByName(cityName);
+            if (city == null) {
+                throw new ShopUpdateException("Invalid city name: " + cityName);
+            }
             shop.setCity(city);
             shopRepository.save(shop);
         } catch (Exception e) {
-            throw new ShopUpdateException("Error updating shop: " + e.getMessage());
+            throw new ShopUpdateException("Error updating: " + e.getMessage());
         }
 
     }
