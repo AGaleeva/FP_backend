@@ -3,6 +3,7 @@ package de.aittr.team24_FP_backend.services.categories;
 import de.aittr.team24_FP_backend.domain.categories.City;
 import de.aittr.team24_FP_backend.domain.categories.DoctorsInfo;
 import de.aittr.team24_FP_backend.exception_handling.exceptions.DoctorNotFoundException;
+import de.aittr.team24_FP_backend.exception_handling.exceptions.DoctorUpdateException;
 import de.aittr.team24_FP_backend.repositories.categories.CityRepository;
 import de.aittr.team24_FP_backend.repositories.categories.DoctorsRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -176,7 +177,7 @@ class DoctorsServiceTest {
 
         when(cityRepository.findByName("Derlin")).thenReturn(null);
 
-        assertThrows(DoctorNotFoundException.class, () -> doctorsService.update(doctorsInfo, "Derlin"));
+        assertThrows(DoctorUpdateException.class, () -> doctorsService.update(doctorsInfo, "Derlin"));
 
         verify(cityRepository, times(1)).findByName("Derlin");
     }
